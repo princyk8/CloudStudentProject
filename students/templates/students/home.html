@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Student Portal</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #173b70;
+            color: white;
+            padding: 22px 8%;
+        }
+
+        header h1 { margin: 0; }
+
+        nav { margin-top: 15px; }
+
+        nav a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 45px 20px;
+            background: white;
+        }
+
+        .hero h2 { color: #173b70; }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px 22px;
+            background: #2563eb;
+            color: white;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th { background: #eff4fc; }
+
+        .table-wrap { overflow-x: auto; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #596579;
+        }
+
+        .errorlist { color: #b91c1c; }
+
+        @media (max-width: 600px) {
+            th, td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Cloud Student Portal</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="#register">Register Student</a>
+        <a href="#records">Student Records</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Student Information Management</h2>
+    <p>Register students and manage their information in one place.</p>
+</section>
+
+<main class="container">
+
+    <section class="card" id="register">
+        <h2>Register a Student</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">Save Student</button>
+        </form>
+    </section>
+
+    <section class="card" id="records">
+        <h2>Registered Students</h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.course }}</td>
+                        <td>{{ student.age }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No students registered yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Cloud Student Portal | Cloud Computing Activity
+</footer>
+
+</body>
+</html>
